@@ -1,0 +1,75 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+}
+
+model Usuario {
+  id        String    @id @default(uuid())
+  email     String    @unique
+  name      String
+  role      String
+  isActive  Boolean   @default(true)
+  createdAt DateTime  @default(now())
+  lastLogin DateTime?
+}
+
+model TipoDelito {
+  id          Int      @id @default(autoincrement())
+  nombre      String
+  descripcion String?
+  delitos     Delito[]
+}
+
+model Localidad {
+  id          Int         @id @default(autoincrement())
+  nombre      String
+  barrios     Barrio[]
+  ubicaciones Ubicacion[]
+}
+
+model Barrio {
+  id          Int         @id @default(autoincrement())
+  nombre      String
+  localidad   Localidad   @relation(fields: [localidadId], references: [id])
+  localidadId Int
+  ubicaciones Ubicacion[]
+}
+
+model Ubicacion {
+  id          Int       @id @default(autoincrement())
+  latitud     Float
+  longitud    Float
+  barrio      Barrio    @relation(fields: [barrioId], references: [id])
+  barrioId    Int
+  localidad   Localidad @relation(fields: [localidadId], references: [id])
+  localidadId Int
+  delitos     Delito[]
+}
+
+model Delito {
+  id           Int        @id @default(autoincrement())
+  nombre       String
+  descripcion  String?
+  fecha        DateTime   @default(now())
+  tipoDelito   TipoDelito @relation(fields: [tipoDelitoId], references: [id])
+  tipoDelitoId Int
+  ubicacion    Ubicacion  @relation(fields: [ubicacionId], references: [id])
+  ubicacionId  Int
+  idEstado     Int
+}
+
+model Setting {
+  id    Int    @id @default(autoincrement())
+  key   String @unique
+  value String
+}
+
+model AuditLog {
+  id        Int      @id @default(autoincrement())
+  action    String
+  resource  String
+  createdAt DateTime @default(now())
+}
