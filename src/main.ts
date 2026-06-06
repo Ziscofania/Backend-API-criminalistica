@@ -4,6 +4,7 @@ import { ValidationPipe } from '@nestjs/common';
 import { DocumentBuilder, SwaggerModule } from '@nestjs/swagger';
 
 async function bootstrap() {
+  console.log('DATABASE_URL =', process.env.DATABASE_URL);
   const app = await NestFactory.create(AppModule);
 
   app.enableCors({
