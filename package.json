@@ -1,8 +1,8 @@
 {
   "name": "api-criminalistica",
   "version": "0.0.1",
-  "description": "",
-  "author": "",
+  "description": "Backend API criminalistica con documentacion automatica",
+  "author": "Ziscofania",
   "private": true,
   "license": "UNLICENSED",
   "scripts": {
@@ -21,7 +21,8 @@
     "prisma:generate": "prisma generate",
     "postinstall": "prisma generate",
     "prisma:migrate": "prisma migrate dev",
-    "prisma:seed": "ts-node prisma/seed.ts"
+    "prisma:seed": "ts-node prisma/seed.ts",
+    "swagger:generate": "node scripts/generate-swagger.js"
   },
   "dependencies": {
     "@nestjs/common": "^11.0.1",
